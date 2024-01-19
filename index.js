@@ -17,7 +17,7 @@ async function pogLoop() {
 
             await new Promise(resolve => {
                 setTimeout(async () => {
-                    client.channels.cache.get('485667177228402698').send(`<@&1197785955516567594> MECHANIC REFRESH IN: ${secWarning / 60} MINUTES!!!!!!!!!`);
+                    client.channels.cache.get(process.env.CHANNEL_ID).send(`<@&${process.env.ROLE_ID}> MECHANIC REFRESH IN: ${secWarning / 60} MINUTES!!!!!!!!!`);
                     
                     await new Promise(res => setTimeout(res, (secWarning + 60) * 1000));
                     resolve();
