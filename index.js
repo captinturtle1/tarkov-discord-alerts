@@ -14,14 +14,20 @@ async function pogLoop() {
     while (true) {
         try {
             let refreshTime = await getRefreshTime();
-
             await new Promise(resolve => {
-                setTimeout(async () => {
-                    client.channels.cache.get(process.env.CHANNEL_ID).send(`<@&${process.env.ROLE_ID}> MECHANIC REFRESH IN: ${secWarning / 60} MINUTES!!!!!!!!!`);
-                    
-                    await new Promise(res => setTimeout(res, (secWarning + 60) * 1000));
-                    resolve();
-                }, (refreshTime - secWarning) * 1000);
+                if (refreshTime > 0) {
+                    setTimeout(async () => {
+                        client.channels.cache.get(process.env.CHANNEL_ID).send(`<@&${process.env.ROLE_ID}> MECHANIC REFRESH IN ${secWarning / 60} MINUTES!!!!!!!!!`);
+                        await new Promise(res => setTimeout(res, (secWarning - 60) * 1000))
+                        client.channels.cache.get(process.env.CHANNEL_ID).send(`<@&${process.env.ROLE_ID}> MECHANIC REFRESH IN 1 MINUTE!!!!!!!!!`);
+                        await new Promise(res => setTimeout(res, 70 * 1000));
+                        resolve();
+                    }, (refreshTime - secWarning) * 1000);
+                } else {
+                    setTimeout(async () => {
+                        resolve();
+                    }, 600 * 1000);
+                }
             })
         } catch(err) {
             console.error(err);
