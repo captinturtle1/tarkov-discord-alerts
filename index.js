@@ -18,7 +18,7 @@ async function alertLoop(role_id, name, channel_id) {
     while (true) {
         try {
             let refreshTime = await getRefreshTime();
-            refreshTime = refreshTime.mechanic;
+            refreshTime = refreshTime[name];
             console.log(`${name} time: `, refreshTime);
             await new Promise(resolve => {
                 if (refreshTime > 0) {
